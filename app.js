@@ -2,9 +2,10 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const ipaddr = require('ipaddr.js');
 
-const HOST = process.env.HOST ? process.env.HOST : 'localhost';
-const PORT = process.env.PORT ? process.env.PORT : 3000;
+const HOST = 'localhost';
+const PORT = 3000;
 const app = express();
+app.disable('x-powered-by');
 
 var parseUrl = function (path) {
   let ps = path.split('/');
@@ -30,7 +31,7 @@ const options = {
     }
     return newPath ? `http://${newPath.host}` : '';
   },
-  pathRewrite: function (path, req) {
+  pathRewrite: function (path) {
     let newPath = parseUrl(path);
     return newPath ? `http://${newPath.path}` : '';
   },
@@ -44,6 +45,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Starting Proxy at ${HOST}:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Starting Proxy at ${PORT}`);
 });
