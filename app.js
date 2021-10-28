@@ -31,7 +31,7 @@ const options = {
     return newPath ? `http://${newPath.host}` : '';
   },
   pathRewrite: function (path, req) {
-    newPath = parseUrl(path);
+    let newPath = parseUrl(path);
     return newPath ? `http://${newPath.path}` : '';
   },
 };
