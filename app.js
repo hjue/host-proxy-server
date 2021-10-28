@@ -19,6 +19,7 @@ const options = {
   changeOrigin: true,
   router: function (req) {
     let newPath = parseUrl(req.originalUrl);
+
     if (!newPath) return '';
     let host = newPath.host.split(':')[0];
     if (!ipaddr.isValid(host)) {
@@ -29,11 +30,12 @@ const options = {
       console.log('无效的主机：' + host);
       return '';
     }
-    return newPath ? `http://${newPath.host}` : '';
+    console.log('-->  ', req.method, req.originalUrl, '->', `http://${newPath.host}${newPath.path}`);
+    return `http://${newPath.host}`;
   },
   pathRewrite: function (path) {
     let newPath = parseUrl(path);
-    return newPath ? `http://${newPath.path}` : '';
+    return newPath ? `${newPath.path}` : '/';
   },
 };
 
