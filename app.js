@@ -2,13 +2,9 @@ const express = require('express');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 const ipaddr = require('ipaddr.js');
 
-const HOST='localhost'
-const PORT=3000
+const HOST= process.env.HOST?process.env.HOST:'localhost'
+const PORT= process.env.PORT?process.env.PORT:3000
 const app = express();
-
-var filter = function (pathname, req) {
-  return (pathname.match('^/api') && req.method === 'GET');
-};
 
 var parseUrl = function (path) {
   let ps = path.split('/')
@@ -19,7 +15,7 @@ var parseUrl = function (path) {
   return {'host':host, 'path':'/' + ps.join('/')}
 }
 const options = {
-  target: 'http://localhost:3000',
+  target: `http://${HOST}:${PORT}`,
   changeOrigin: true,
   router: function (req) {
     let newPath = parseUrl(req.originalUrl) 
