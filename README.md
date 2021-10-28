@@ -7,6 +7,11 @@ proxy server for some rules
 npm install
 ```
 
+生产环境
+
+```
+npm install --production
+```
 
 ## Run
 
