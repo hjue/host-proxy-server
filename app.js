@@ -37,6 +37,12 @@ const options = {
     let newPath = parseUrl(path);
     return newPath ? `${newPath.path}` : '/';
   },
+  onError: function (err, req, res) {
+    res.writeHead(500, {
+      'Content-Type': 'text/plain',
+    });
+    res.end('Internal Server Error');
+  },
 };
 
 const proxyServer = createProxyMiddleware(options);
